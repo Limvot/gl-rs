@@ -20,4 +20,5 @@ version = "0"
 
 [dependencies]
 log = "*"
-xml-rs = "*"
+[dependencies.xml-rs]
+git = "https://github.com/bfops/xml-rs.git"
