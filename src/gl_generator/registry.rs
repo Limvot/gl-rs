@@ -413,7 +413,7 @@ impl<R: Buffer> RegistryBuilder<R> {
                 }
 
                 XmlEvent::StartElement{ref name, ref attributes, ..} if name.local_name.as_slice() == "feature" => {
-                    debug!("Parsing feature: {:?}", attributes);
+                    //debug!("Parsing feature: {:?}", attributes);
                     registry.features.push(FromXML::convert(self, attributes.as_slice()));
                 }
 
@@ -468,11 +468,11 @@ impl<R: Buffer> RegistryBuilder<R> {
                         for rem in f.removes.iter() {
                             if rem.profile == filter.profile {
                                 for enm in rem.enums.iter() {
-                                    debug!("Removing {}", enm);
+                                    //debug!("Removing {}", enm);
                                     desired_enums.remove(enm);
                                 }
                                 for cmd in rem.commands.iter() {
-                                    debug!("Removing {}", cmd);
+                                    //debug!("Removing {}", cmd);
                                     desired_cmds.remove(cmd);
                                 }
                             }
@@ -521,7 +521,7 @@ impl<R: Buffer> RegistryBuilder<R> {
     }
 
     fn consume_two<'a, T: FromXML, U: FromXML>(&self, one: &'a str, two: &'a str, end: &'a str) -> (Vec<T>, Vec<U>) {
-        debug!("consume_two: looking for {} and {} until {}", one, two, end);
+        //debug!("consume_two: looking for {} and {} until {}", one, two, end);
 
         let mut ones = Vec::new();
         let mut twos = Vec::new();
@@ -529,8 +529,8 @@ impl<R: Buffer> RegistryBuilder<R> {
         loop {
             match self.recv() {
                 XmlEvent::StartElement{ref name, ref attributes, ..} => {
-                    debug!("Found start element <{:?} {:?}>", name, attributes);
-                    debug!("one and two are {} and {}", one, two);
+                    //debug!("Found start element <{:?} {:?}>", name, attributes);
+                    //debug!("one and two are {} and {}", one, two);
 
                     let n = name.clone();
 
@@ -549,7 +549,7 @@ impl<R: Buffer> RegistryBuilder<R> {
                     }
                 },
                 XmlEvent::EndElement{ref name} => {
-                    debug!("Found end element </{:?}>", name);
+                    //debug!("Found end element </{:?}>", name);
 
                     if (&[one, two]).iter().any(|&x| x == name.local_name.as_slice()) {
                         continue;
@@ -741,7 +741,7 @@ trait FromXML {
 
 impl FromXML for Require {
     fn convert<R: Buffer>(r: &RegistryBuilder<R>, a: &[OwnedAttribute]) -> Require {
-        debug!("Doing a FromXML on Require");
+        //debug!("Doing a FromXML on Require");
         let comment = get_attribute(a, "comment");
         let (enums, commands) = r.consume_two("enum", "command", "require");
         Require {
@@ -754,7 +754,7 @@ impl FromXML for Require {
 
 impl FromXML for Remove {
     fn convert<R: Buffer>(r: &RegistryBuilder<R>, a: &[OwnedAttribute]) -> Remove {
-        debug!("Doing a FromXML on Remove");
+        //debug!("Doing a FromXML on Remove");
         let profile = get_attribute(a, "profile").unwrap();
         let comment = get_attribute(a, "comment").unwrap();
         let (enums, commands) = r.consume_two("enum", "command", "remove");
@@ -770,12 +770,12 @@ impl FromXML for Remove {
 
 impl FromXML for Feature {
     fn convert<R: Buffer>(r: &RegistryBuilder<R>, a: &[OwnedAttribute]) -> Feature {
-        debug!("Doing a FromXML on Feature");
+        //debug!("Doing a FromXML on Feature");
         let api      = get_attribute(a, "api").unwrap();
         let name     = get_attribute(a, "name").unwrap();
         let number   = get_attribute(a, "number").unwrap();
 
-        debug!("Found api = {}, name = {}, number = {}", api, name, number);
+        //debug!("Found api = {}, name = {}, number = {}", api, name, number);
 
         let (require, remove) = r.consume_two("require", "remove", "feature");
 
@@ -791,7 +791,7 @@ impl FromXML for Feature {
 
 impl FromXML for Extension {
     fn convert<R: Buffer>(r: &RegistryBuilder<R>, a: &[OwnedAttribute]) -> Extension {
-        debug!("Doing a FromXML on Extension");
+        //debug!("Doing a FromXML on Extension");
         let name = get_attribute(a, "name").unwrap();
         let supported = get_attribute(a, "supported").unwrap().as_slice().split('|').map(|x| x.to_string()).collect::<Vec<String>>();
         let mut require = Vec::new();
