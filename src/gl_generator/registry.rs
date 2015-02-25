@@ -540,7 +540,7 @@ impl<R: Buffer> RegistryBuilder<R> {
                         // XXX: GL1.1 contains types, which we never care about anyway.
                         // Make sure consume_two doesn't get used for things which *do*
                         // care about type.
-                        warn!("Ignoring type!");
+                        //warn!("Ignoring type!");
                         continue;
                     } else if two == n.local_name.as_slice() {
                         twos.push(FromXML::convert(self, attributes.as_slice()));
@@ -557,7 +557,7 @@ impl<R: Buffer> RegistryBuilder<R> {
                         // XXX: GL1.1 contains types, which we never care about anyway.
                         // Make sure consume_two doesn't get used for things which *do*
                         // care about type.
-                        warn!("Ignoring type!");
+                        //warn!("Ignoring type!");
                         continue;
                     } else if end == name.local_name.as_slice() {
                         return (ones, twos);
