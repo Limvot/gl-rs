@@ -91,10 +91,10 @@
 #![feature(plugin)]
 #![feature(plugin_registrar)]
 #![feature(quote)]
-#![plugin(log)]
+//#![plugin(log)]
 
 #[macro_use]
-extern crate log;
+//extern crate log;
 
 extern crate khronos_api;
 

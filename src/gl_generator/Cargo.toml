@@ -18,7 +18,5 @@ path = "lib.rs"
 path = "../khronos_api"
 version = "0"
 
-[dependencies]
-log = "*"
 [dependencies.xml-rs]
 git = "https://github.com/bfops/xml-rs.git"
