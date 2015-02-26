@@ -62,7 +62,8 @@ impl FromStr for Ns {
     }
 }
 
-impl fmt::String for Ns {
+//impl fmt::String for Ns {
+impl fmt::Debug for Ns {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         match *self {
             Gl  => write!(fmt, "gl"),
